@@ -1,6 +1,14 @@
 package v1
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"goblog/model"
+	"goblog/utils/errmsg"
+	"net/http"
+	"strconv"
+)
+
+var code int
 
 // 查询用户是否存在
 func UserExist(c *gin.Context) {
@@ -10,13 +18,42 @@ func UserExist(c *gin.Context) {
 // 添加用户
 func AddUser(c *gin.Context) {
 	// todo 添加用户
+	var data model.User
+	_ = c.ShouldBindJSON(&data)
+	code = model.CheckUser(data.Username)
+	if code == errmsg.SUCCES {
+		model.CreateUser(&data)
+	}
+	if code == errmsg.ERROR_USERNAME_USED {
+		code = errmsg.ERROR_USERNAME_USED
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"data":    data,
+		"message": errmsg.GetErrMsg(code),
+	})
+
 }
 
 // 查询单个用户
 
 // 查询用户列表
 func GetUsers(c *gin.Context) {
-
+	pageSize, _ := strconv.Atoi(c.Query("pagesize"))
+	pageNum, _ := strconv.Atoi(c.Query("pagenum"))
+	if pageSize == 0 {
+		pageSize = -1
+	}
+	if pageNum == 0 {
+		pageNum = -1
+	}
+	data := model.GetUsers(pageSize, pageNum)
+	code = errmsg.SUCCES
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"data":    data,
+		"message": errmsg.GetErrMsg(code),
+	})
 }
 
 // 编辑用户

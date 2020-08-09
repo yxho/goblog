@@ -24,7 +24,7 @@ func InitDb() {
 	}
 	// 禁用默认表名的复数形式，如果置为 true，则 `User` 的默认表名是 `user`
 	db.SingularTable(true)
-	db.AutoMigrate(&User{},&Article{},&Category{})
+	db.AutoMigrate(&User{}, &Article{}, &Category{})
 	// SetMaxIdleCons 设置连接池中的最大闲置连接数。
 	db.DB().SetMaxIdleConns(10)
 
@@ -32,7 +32,7 @@ func InitDb() {
 	db.DB().SetMaxOpenConns(100)
 
 	// SetConnMaxLifetiment 设置连接的最大可复用时间。
-	db.DB().SetConnMaxLifetime(10*time.Second)
+	db.DB().SetConnMaxLifetime(10 * time.Second)
 
 	//db.Close()
 }

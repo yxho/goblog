@@ -5,9 +5,8 @@ import (
 	"goblog/routes"
 )
 
-func main(){
+func main() {
 
 	model.InitDb()
 	routes.InitRouter()
 }
-

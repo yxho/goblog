@@ -6,10 +6,8 @@ import (
 )
 
 type Article struct {
+	Category Category `gorm:"foreignkey:Cid"`
 	gorm.Model
-
-	Category Category
-
 	Title   string `gorm:"type:varchar(20);not null" json:"title"`
 	Cid     int    `gorm:"type:int;not null" json:"cid"`
 	Desc    string `gorm:"type:varchar(200)" json:"desc"`
@@ -19,9 +17,6 @@ type Article struct {
 
 // 新增文章
 func CreateArticle(data *Article) int {
-	// todo 添加用户
-	//data.Password = ScryptPw(data.Password)
-
 	err := db.Create(&data).Error
 	if err != nil {
 		return errmsg.ERROR
@@ -29,18 +24,35 @@ func CreateArticle(data *Article) int {
 	return errmsg.SUCCES
 }
 
-// todo 查询分类下的所有文章
-
-// todo 查询单个文章
-
-// todo 查询文章列表
-func GetArticle(pageSize int, pageNum int) []Article {
-	var article []Article
-	err = db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&article).Error
-	if err != nil && err != gorm.ErrRecordNotFound {
-		return nil
+// 查询分类下的所有文章
+func GetCategoryArticle(id int, pageSize int, pageNum int) ([]Article, int) {
+	var cateArtList []Article
+	err := db.Preload("Category").Limit(pageSize).Offset((pageNum-1)*pageSize).Where("cid = ?", id).Find(&cateArtList).Error
+	if err != nil {
+		return nil, errmsg.ERROR_CATE_NOT_EXIST_USED
 	}
-	return article
+	return cateArtList,errmsg.SUCCES
+}
+
+// 查询单个文章
+func GetArticleInfo(id int) (Article, int) {
+	var article Article
+	err := db.Preload("Category").Where("id = ?", id).First(&article).Error
+	if err != nil {
+		return article, errmsg.ERROR_ART_NOT_EXIST
+	}
+	return article, errmsg.SUCCES
+
+}
+
+// 查询文章列表
+func GetArticle(pageSize int, pageNum int) ([]Article, int) {
+	var articleList []Article
+	err = db.Preload("Category").Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&articleList).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, errmsg.ERROR
+	}
+	return articleList, errmsg.SUCCES
 }
 
 // 编辑用户信息

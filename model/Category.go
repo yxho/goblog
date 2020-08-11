@@ -22,7 +22,6 @@ func CheckCategory(name string) (code int) {
 
 // 新增分类
 func CreateCategory(data *Category) int {
-	// todo 添加用户
 	//data.Password = ScryptPw(data.Password)
 
 	err := db.Create(&data).Error

@@ -10,7 +10,6 @@ import (
 
 // 添加用户
 func AddCategory(c *gin.Context) {
-	// todo 添加用户
 	var data model.Category
 	_ = c.ShouldBindJSON(&data)
 	code = model.CheckCategory(data.Name)

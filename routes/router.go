@@ -3,36 +3,42 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	v1 "goblog/api/v1"
+	"goblog/middleware"
 	"goblog/utils"
 )
 
 func InitRouter() {
 	gin.SetMode(utils.AppMode)
-
 	r := gin.Default()
+
+	auth := r.Group("api/v1")
+	auth.Use(middleware.JwtToken())
+	{
+		// User模块的路由接口
+
+		auth.PUT("user/:id", v1.EditUser)
+		auth.DELETE("user/:id", v1.DeleteUser)
+
+		// 分类模块的路由接口
+		auth.POST("category/add", v1.AddCategory)
+		auth.PUT("category/:id", v1.EditCategory)
+		auth.DELETE("category/:id", v1.DeleteCategory)
+
+		// 文章模块的路由接口
+		auth.POST("article/add", v1.AddArticle)
+		auth.PUT("article/:id", v1.EditArticle)
+		auth.DELETE("article/:id", v1.DeleteArticle)
+	}
 
 	routerV1 := r.Group("api/v1")
 	{
-		// User模块的路由接口
 		routerV1.POST("user/add", v1.AddUser)
 		routerV1.GET("users", v1.GetUsers)
-		routerV1.PUT("user/:id", v1.EditUser)
-		routerV1.DELETE("user/:id", v1.DeleteUser)
-
-		// 分类模块的路由接口
-		routerV1.POST("category/add", v1.AddCategory)
 		routerV1.GET("category", v1.GetCategory)
-		routerV1.PUT("category/:id", v1.EditCategory)
-		routerV1.DELETE("category/:id", v1.DeleteCategory)
-
-		// 文章模块的路由接口
-		routerV1.POST("article/add", v1.AddArticle)
 		routerV1.GET("article", v1.GetArticle)
 		routerV1.GET("category/articles/:id", v1.GetCategoryArticle)
 		routerV1.GET("article/info/:id", v1.GetArticleInfo)
-		routerV1.PUT("article/:id", v1.EditArticle)
-		routerV1.DELETE("article/:id", v1.DeleteArticle)
+		routerV1.POST("login", v1.Login)
 	}
-
-	r.Run(utils.HttpPort)
+	_ = r.Run(utils.HttpPort)
 }

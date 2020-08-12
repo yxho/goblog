@@ -54,7 +54,7 @@ func EditUser(id int, data *User) int {
 	maps["username"] = data.Username
 	maps["role"] = data.Role
 	db.Model(&user).Where("id = ?", id).Updates(maps)
-	if err != nil{
+	if err != nil {
 		return errmsg.ERROR
 	}
 	return errmsg.SUCCES
@@ -87,4 +87,21 @@ func ScryptPw(password string) string {
 	}
 	fpw := base64.StdEncoding.EncodeToString(HashPw)
 	return fpw
+}
+
+// 登陆验证
+func CheckLogin(username string, password string) int {
+	var user User
+
+	db.Where("username = ?", username).First(&user)
+	if user.ID == 0 {
+		return errmsg.ERROR_USER_NOT_EXIST
+	}
+	if ScryptPw(password) != user.Password {
+		return errmsg.ERROR_PASSWOED_WRONG
+	}
+	if user.Role != 0 {
+		return errmsg.ERROR_TOKEN_NO_RIGHT
+	}
+	return errmsg.SUCCES
 }

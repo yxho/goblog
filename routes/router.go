@@ -15,7 +15,6 @@ func InitRouter() {
 	auth.Use(middleware.JwtToken())
 	{
 		// User模块的路由接口
-
 		auth.PUT("user/:id", v1.EditUser)
 		auth.DELETE("user/:id", v1.DeleteUser)
 
@@ -28,6 +27,8 @@ func InitRouter() {
 		auth.POST("article/add", v1.AddArticle)
 		auth.PUT("article/:id", v1.EditArticle)
 		auth.DELETE("article/:id", v1.DeleteArticle)
+		// 上传文件
+		auth.POST("upload",v1.UpLoad)
 	}
 
 	routerV1 := r.Group("api/v1")

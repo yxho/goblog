@@ -3,6 +3,8 @@ package middleware
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	retalog "github.com/lestrrat-go/file-rotatelogs"
+	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
 	"math"
 	"os"
@@ -10,7 +12,37 @@ import (
 )
 
 func Logger() gin.HandlerFunc {
+	filePath := "log/log.log"
+	LinkName := "latest_log.log"
+
+	scr, err := os.OpenFile(filePath, os.O_RDWR|os.O_CREATE, 00755)
+	if err != nil {
+		fmt.Println("err:", err)
+	}
+
 	logger := logrus.New()
+	logger.Out = scr
+
+	logWriter, _ := retalog.New(
+		filePath+"%Y%m%d.log",
+		retalog.WithMaxAge(7*24*time.Hour),
+		retalog.WithRotationTime(24*time.Hour),
+		retalog.WithLinkName(LinkName),
+	)
+
+	writeMap := lfshook.WriterMap{
+		logrus.InfoLevel:  logWriter,
+		logrus.FatalLevel: logWriter,
+		logrus.DebugLevel: logWriter,
+		logrus.WarnLevel:  logWriter,
+		logrus.ErrorLevel: logWriter,
+		logrus.PanicLevel: logWriter,
+	}
+
+	Hook := lfshook.NewHook(writeMap, &logrus.TextFormatter{
+		TimestampFormat: "2006-01-02 15:04:05",
+	})
+	logger.AddHook(Hook)
 	return func(c *gin.Context) {
 		startTime := time.Now()
 		c.Next()
@@ -40,14 +72,14 @@ func Logger() gin.HandlerFunc {
 			"DataSize":  dataSize,
 			"Agent":     userAgent,
 		})
-		if len(c.Errors)>0{
+		if len(c.Errors) > 0 {
 			entry.Error(c.Errors.ByType(gin.ErrorTypePrivate).String())
 		}
-		if statusCode>=500{
+		if statusCode >= 500 {
 			entry.Error()
-		}else if statusCode>=400{
+		} else if statusCode >= 400 {
 			entry.Warn()
-		}else{
+		} else {
 			entry.Info()
 		}
 	}

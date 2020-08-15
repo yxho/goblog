@@ -1,0 +1,2 @@
+time="2020-08-15T21:58:10+08:00" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=1426 HostName=DESKTOP-I3JK7DP Ip="::1" Method=GET Path="/api/v1/users?pagesize=20&pagenum=1" SpendTime="17 ms" Status=200
+time="2020-08-15T21:57:52+08:00" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=1426 HostName=DESKTOP-I3JK7DP Ip="::1" Method=GET Path="/api/v1/users?pagesize=20&pagenum=1" SpendTime="7 ms" Status=200

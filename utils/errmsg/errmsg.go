@@ -16,7 +16,7 @@ const (
 	//code = 2000... 文章模块的错误
 	ERROR_ART_NOT_EXIST = 2001
 	//code = 3000... 分类模块的错误
-	ERROR_CATENAME_USED       = 3001
+	ERROR_CATENAME_USED  = 3001
 	ERROR_CATE_NOT_EXIST = 3002
 )
 
@@ -32,8 +32,8 @@ var codeMsg = map[int]string{
 	ERROR_TOKEN_TYPE_WRONG: "TOKEN格式错误",
 	ERROR_TOKEN_NO_RIGHT:   "该用户无权限",
 
-	ERROR_CATENAME_USED:       "分类已存在",
-	ERROR_ART_NOT_EXIST:       "文章不存在",
+	ERROR_CATENAME_USED:  "分类已存在",
+	ERROR_ART_NOT_EXIST:  "文章不存在",
 	ERROR_CATE_NOT_EXIST: "该分类不存在",
 }
 

@@ -1,3 +1,5 @@
 time="2020-08-15T23:27:43+08:00" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=1600 HostName=DESKTOP-I3JK7DP Ip="::1" Method=GET Path="/api/v1/users?pagesize=0&pagenum=0" SpendTime="46 ms" Status=200
 time="2020-08-15T23:28:07+08:00" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=4448 HostName=DESKTOP-I3JK7DP Ip=127.0.0.1 Method=GET Path="/api/v1/article?pagesize=&pagenum=" SpendTime="387 ms" Status=200
-time="2020-08-15T23:29:44+08:00" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=96 HostName=DESKTOP-I3JK7DP Ip=127.0.0.1 Method=GET Path="/api/v1/category?pa
+time="2020-08-15T23:29:44+08:00" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=96 HostName=DESKTOP-I3JK7DP Ip=127.0.0.1 Method=GET Path="/api/v1/category?pagesize=2&pagenum=1" SpendTime="7 ms" Status=200
+time="2020-08-15T23:32:20+08:00" level=warning Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=0 HostName=DESKTOP-I3JK7DP Ip="::1" Method=POST Path="/api/v1/category/articles/3?pagesize=&pagenum=" SpendTime="0 ms" Status=404
+time="2020-08-15T23:32:28+08:00" level=info Agent="ApiPOST Runtime +https://www.apipost.cn" DataSize=783 HostName=DESKTOP-I3JK7DP Ip="::1" Method=GET Path="/api/v1/category/articles/3?pagesize=&pagenum=" SpendTime="4 ms" Status=200

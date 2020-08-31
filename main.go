@@ -5,6 +5,7 @@ import (
 	"goblog/routes"
 )
 
+// 充满希望
 func main() {
 
 	model.InitDb()

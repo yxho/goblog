@@ -17,6 +17,7 @@
             v-model="formdata.password"
             placeholder="Password"
             type="password"
+            v-on:keyup.enter = "login"
             ><a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
           </a-input>
         </a-form-model-item>

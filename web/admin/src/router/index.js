@@ -12,8 +12,7 @@ import UserList from '../components/user/UserList.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/login',
     name: 'login',
     component: Login
@@ -22,12 +21,26 @@ const routes = [
     path: '/admin',
     name: 'admin',
     component: Admin,
-    children: [
-      { path: '/index', component: Index },
-      { path: '/addart', component: AddArt },
-      { path: '/artlist', component: ArtList },
-      { path: '/catelist', component: CateList },
-      { path: '/userlist', component: UserList }
+    children: [{
+        path: 'index',
+        component: Index
+      },
+      {
+        path: 'addart',
+        component: AddArt
+      },
+      {
+        path: 'artlist',
+        component: ArtList
+      },
+      {
+        path: 'catelist',
+        component: CateList
+      },
+      {
+        path: 'userlist',
+        component: UserList
+      }
     ]
   }
 ]

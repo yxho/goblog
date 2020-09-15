@@ -8,9 +8,9 @@
         <a-icon type="dashboard"></a-icon><span>仪表盘</span>
       </a-menu-item>
       <a-sub-menu>
-        <span slot="title"
-          ><a-icon type="file"></a-icon><span>文章管理</span></span
-        >
+        <span slot="title">
+          <a-icon type="file"></a-icon><span>文章管理</span>
+        </span>
         <a-menu-item key="addart">
           <a-icon type="form"></a-icon><span>写文章</span>
         </a-menu-item>

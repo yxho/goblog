@@ -11,7 +11,8 @@ import {
   Card,
   Table,
   Col,
-  Row
+  Row,
+  ConfigProvider
 } from 'ant-design-vue'
 
 message.config({
@@ -31,3 +32,4 @@ Vue.use(Card)
 Vue.use(Table)
 Vue.use(Col)
 Vue.use(Row)
+Vue.use(ConfigProvider)
